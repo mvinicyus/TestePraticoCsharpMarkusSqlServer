@@ -1,0 +1,23 @@
+Como próxima etapa, gostaríamos de te convidar para o desafio abaixo! =)
+
+Desenvolver uma aplicação em C# e SQL Server 
+para realizar uma ação de CRUD completo 
+(Inserir, Alterar, Excluir e Selecionar) com interface de manipulação. 
+Utilizar como exemplo um cadastro de pessoa física contendo os seguintes campos:
+
+- Nome completo
+- Data de nascimento
+- Valor da renda
+- CPF
+
+Entregáveis:
+
+- A solution do projeto deverá ser disponibilizada no GIT;
+
+- Deverão ser disponibilizados os scripts de criação da estrutura de dados do SQL Server.
+
+Observações:
+
+- Após a avaliação do código fonte, será agendada uma apresentação do projeto funcional;
+
+- Será tratado como diferencial a utilização de APIs para a comunicação entre o front-end e o back-end.

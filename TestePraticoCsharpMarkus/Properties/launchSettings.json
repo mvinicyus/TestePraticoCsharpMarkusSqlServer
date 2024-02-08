@@ -1,0 +1,44 @@
+﻿{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:37883",
+      "sslPort": 44350
+    }
+  },
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5085",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MySqlConnectionString": "Server=localhost,1433; Database=userDb; User Id=sa; Password=12Docker3; TrustServerCertificate=True"
+      }
+    },
+    "https": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7210;http://localhost:5085",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MySqlConnectionString": "Server=localhost,1433; Database=userDb; User Id=sa; Password=12Docker3; TrustServerCertificate=True"
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MySqlConnectionString": "Server=localhost,1433; Database=userDb; User Id=sa; Password=12Docker3; TrustServerCertificate=True"
+      }
+    }
+  }
+}
