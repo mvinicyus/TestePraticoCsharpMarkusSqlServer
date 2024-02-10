@@ -40,7 +40,7 @@ namespace Application.Handler.Person
 
                 if (person == null)
                 {
-                    _ = ApplyErrorAsync("Person não encontrado.");
+                    _ = ApplyErrorAsync("Pessoa não encontrado.");
                     return null;
                 }
 
@@ -50,7 +50,7 @@ namespace Application.Handler.Person
                 {
                     Id = person.Id,
                     FullName = person.FullName,
-                    BirthDate = person.BirthDate.Value.ToString("dd/MM/yyyy"),
+                    BirthDate = person.BirthDate.Value.ToString("yyyy-MM-dd"),
                     IncomeValue = person.IncomeValue.Value.ToString("N2"),
                     Cpf = person.Cpf,
                     CreateDate = person.CreateDate.ToString("dd/MM/yyyy HH:mm"),

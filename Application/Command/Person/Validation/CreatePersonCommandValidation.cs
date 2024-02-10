@@ -14,12 +14,45 @@ namespace Application.Command.Person.Validation
 
             RuleFor(d => d.Input.BirthDate)
                 .NotNull().WithMessage("Preencha a data de nascimento")
-                .Must(x => x.Value < DateTime.Now.Date).WithMessage("Data de nascimento precisa ser válida")
-                .Must(x => x.Value <= DateTime.Now.Date.AddYears(-18)).WithMessage("Não é permitido cadastrar pessoas menores de idade");
+                .Must(x =>
+                {
+                    if (string.IsNullOrWhiteSpace(x))
+                    {
+                        return false;
+                    }
+                    DateTime test;
+                    var valid = DateTime.TryParse(x, out test) && test > DateTime.MinValue;
+                    if (!valid)
+                    {
+                        return false;
+                    }
+                    var isPast = test < DateTime.Now.Date;
+                    return isPast;
+                }).WithMessage("Data de nascimento precisa ser válida")
+                .Must(x =>
+                {
+                    if (string.IsNullOrWhiteSpace(x))
+                    {
+                        return false;
+                    }
+                    DateTime test;
+                    var valid = DateTime.TryParse(x, out test) && test > DateTime.MinValue;
+                    if (!valid)
+                    {
+                        return false;
+                    }
+                    var isMajor = test <= DateTime.Now.Date.AddYears(-18);
+                    return isMajor;
+                })
+                .WithMessage("Não é permitido cadastrar pessoas menores de idade");
 
             RuleFor(d => d.Input.IncomeValue)
                 .NotNull().WithMessage("Preencha o valor da renda")
-                .GreaterThanOrEqualTo(1).WithMessage("Valor da renda precisa ser um número positivo");
+                .Must(x =>
+                {
+                    decimal test = 0;
+                    return decimal.TryParse(x, out test) && test > 0;
+                }).WithMessage("Valor da renda precisa ser um número positivo");
 
             RuleFor(d => d.Input.Cpf)
                 .NotNull().WithMessage("Preencha o cpf")

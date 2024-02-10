@@ -1,0 +1,385 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <title>Plataforma - Pessoas</title>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="pt-br">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        body {
+            background-color: lightgray;
+            padding: 0px;
+            margin: 0px;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+            justify-content: center;
+        }
+
+        .box-notifications {
+            display: flex;
+            background-color: whitesmoke;
+            justify-content: flex-start;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+            align-items: normal;
+        }
+
+        .notifications {
+            border: solid;
+            border-radius: 15px;
+            padding: 2px;
+            margin: 2px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .help {
+            padding: 0px;
+            margin: 0px;
+            width: 100%;
+            justify-content: center;
+            display: flex;
+        }
+
+        .dataTables_wrapper.dt-bootstrap4.no-footer {
+            width: 100%;
+            padding: 15px;
+        }
+
+        .dataTables_paginate.paging_simple_numbers {
+            justify-content: flex-end;
+            display: flex;
+        }
+
+        .dataTables_filter {
+            justify-content: flex-end;
+            display: flex;
+        }
+
+        .center {
+            width: 100%;
+            text-align: center;
+        }
+
+        .input {
+            border-radius: 10px;
+            border: solid;
+            padding: 6px;
+            margin: 3px;
+        }
+
+        .vertcal {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .horinzontal-end {
+            justify-content: flex-end;
+            display: flex;
+        }
+
+        .btnx {
+            border: solid;
+            border-radius: 10px;
+            padding: 6px;
+            margin: 3px;
+            background-color: white;
+            margin-top: 30px;
+            cursor: pointer;
+        }
+
+            .btnx:hover {
+                background-color: whitesmoke;
+                box-shadow: gray 0px 0px 0px 0px;
+                box-shadow: gray 0px 0px 8px 2px;
+            }
+
+            .btnx:active {
+                background-color: gray;
+                box-shadow: gray 0px 0px 8px 0px;
+            }
+
+    </style>
+</head>
+<body>
+    <div class="help">
+        <h4 id="txtHelp"></h4>
+    </div>
+    <div id="messageList" class="box-notifications">
+        <div id="componente1" class="notifications">
+
+            <h4 class="center">Plataforma - Pessoas</h4>
+
+            <div class="notifications">
+                <div class="row">
+                    <div class="vertcal col-12 col-md-6">
+                        <label>Nome completo</label>
+                        <input id="fullName" class="input" placeholder="Digite o nome completo" />
+                    </div>
+
+                    <div class="vertcal col-12 col-md-6">
+                        <label>Data de nascimento</label>
+                        <input id="birthDate" type="date" class="input" placeholder="Digite a Data de nascimento" />
+                    </div>
+
+                    <div class="vertcal col-12 col-md-6">
+                        <label>Valor da renda R$</label>
+                        <input id="incomeValue" type="text" class="input" placeholder="Digite o Valor da renda" />
+                    </div>
+
+                    <div class="vertcal col-12 col-md-6">
+                        <label>CPF</label>
+                        <input id="cpf" type="text" class="input" placeholder="Digite o CPF" />
+                    </div>
+
+                    <div class="horinzontal-end col-12">
+                        <buttom id="btnNew" class="btnx">Novo</buttom>
+                        <buttom id="btnSave" class="btnx">Salvar</buttom>
+                        <input id="id" type="hidden" value="0" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table id="tablePaged" class="align-middle mb-0 table table-borderless table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nome completo</th>
+                            <th class="text-center">Data de nascimento</th>
+                            <th class="text-center">Valor da renda R$</th>
+                            <th class="text-center">CPF</th>
+                            <th class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="templateItem">
+                            <td class="text-center">[[fullname]]</td>
+                            <td class="text-center">[[birthdate]]</td>
+                            <td class="text-center">[[incomevalue]]</td>
+                            <td class="text-center">[[cpf]]</td>
+                            <td class="text-center">
+                                <div role="group" class="btn-group-sm btn-group btn-group-toggle">
+                                    <button data-id="[[id]]" type="button" class="btn btn-primary btn-edit"> Editar </button>
+                                    <button data-id="[[id]]" type="button" class="btn btn-primary btn-delete"> Excluir </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="jquery-3.6.1.min.js"></script>
+    <script src="jquery.dataTables.min.js"></script>
+    <script src="dataTables.bootstrap4.min.js"></script>
+    <script src="dataTables.responsive.min.js"></script>
+    <script src="dataTables.buttons.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var templateItem = $('#templateItem').html();
+            $('#templateItem').html('');
+
+            function clear() {
+                $("#fullName").val("");
+                $("#birthDate").val("");
+                $("#incomeValue").val("");
+                $("#cpf").val("");
+                $("#id").val("0");
+            }
+
+            function loadTable() {
+                if ($.fn.DataTable.isDataTable('#tablePaged')) {
+                    $('#tablePaged').DataTable().destroy();
+                }
+
+                var singularSubject = "pessoa";
+                var pluralSubject = "pessoas";
+                var endPhrases = "a";
+                var nobody = "nenhuma";
+                $('#tablePaged').DataTable({
+                    "language": {
+                        "zeroRecords": `Desculpe, ${nobody} ${singularSubject} encontrad${endPhrases}`,
+                        "info": `Mostrando página _PAGE_ de _PAGES_ num total de _MAX_ ${pluralSubject}`,
+                        "infoEmpty": `Desculpe, ${nobody} ${singularSubject} encontrad${endPhrases}`,
+                        "infoFiltered": `(Filtrando de _MAX_ ${pluralSubject} no total)`,
+                        "select": true,
+                        "decimal": "",
+                        "emptyTable": `Desculpe, ${nobody} ${singularSubject} encontrad${endPhrases}`,
+                        "infoPostFix": "",
+                        "thousands": ",",
+                        "lengthMenu": "Mostrar _MENU_",
+                        "aLengthMenu": [[5, 10, 15, 20], [5, 10, 15, 20]],
+                        "loadingRecords": `Carregando ${pluralSubject}...`,
+                        "processing": `Carregando ${pluralSubject}...`,
+                        "search": "Buscar:",
+                        "paginate": { "first": "Primeiro", "last": "Último", "next": "Próximo", "previous": "Anterior" },
+                        "aria": { "sortAscending": ": Ordenar de forma crescente está coluna", "sortDescending": ": Ordenar de forma decrescente está coluna" },
+                    },
+                    "pageLength": 5,
+                    "lengthMenu": [[5, 10, 25, 50], [5, 10, 25, 50]],
+                    "aoColumns": [null, null, null, null, null],
+                    "autoWidth": false,
+                    "bDestroy": true,
+                    "destroy": true,
+                    "info": true,
+                    "lengthChange": true,
+                    "order": [[0, "asc"]],
+                    "ordering": false,
+                    "responsive": true,
+                    "searching": true,
+                    'columnDefs': [
+                        { 'orderable': true, 'targets': 0 },
+                        { 'orderable': true, 'targets': 1 },
+                        { 'orderable': true, 'targets': 2 },
+                        { 'orderable': true, 'targets': 3 },
+                        { 'orderable': false, 'targets': 4 }
+                    ],
+                    "paging": true,
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": function (data, callback, settings) {
+                        var pagedParams = {
+                            search: data.search.value,
+                            draw: data.draw,
+                            start: data.start,
+                            length: data.length,
+                            sortColumns: data.order.map(function (v, i) {
+                                return {
+                                    column: v.column,
+                                    asc: v.dir === "asc"
+                                };
+                            })
+                        };
+
+                        fetch(`https://localhost:7210/Person?StartIndex=${pagedParams.start}&PageLength=${pagedParams.length}&Draw=${pagedParams.draw}&Search=${pagedParams.search}`, { method: 'GET' })
+                            .then(response => {
+                                if (response.status != 400) {
+                                    response.json().then(parsedValue => {
+                                        callback(parsedValue);
+                                    });
+                                }
+                            });
+                    },
+                    "createdRow": function (row, data, index) {
+                        var item = {
+                            id: data[0],
+                            name: data[1],
+                            birthDate: data[2],
+                            incomeValue: data[3],
+                            cpf: data[4]
+                        };
+
+                        var htmlActions = templateItem
+                            .replace(/\[\[id\]\]/g, item.id)
+                            .replace(/\[\[fullname\]\]/g, item.name)
+                            .replace(/\[\[birthdate\]\]/g, item.birthDate)
+                            .replace(/\[\[incomevalue\]\]/g, item.incomeValue)
+                            .replace(/\[\[cpf\]\]/g, item.cpf)
+                            ;
+
+                        $(row).html(htmlActions);
+                    },
+                    'rowCallback': function (row, data, index) {
+                    },
+                    "drawCallback": function (settings) {
+
+                        $('.btn-edit').off('click');
+                        $('.btn-edit').on('click', function () {
+                            var id = $(this).data('id');
+                            fetch(`https://localhost:7210/${id}`, { method: 'GET' }).then(response => {
+                                if (response.status == 400) {
+                                    response.json().then(parsedValue => {
+                                        var html = "Ocorreu um erro\n\n";
+                                        $.each(parsedValue, function (index, item) {
+                                            html += `${item}\n`;
+                                        });
+                                        alert(html);
+                                    });
+                                } else {
+                                    response.json().then(parsedValue => {
+                                        $("#fullName").val(parsedValue.fullName);
+                                        $("#birthDate").val(parsedValue.birthDate);
+                                        $("#incomeValue").val(parsedValue.incomeValue);
+                                        $("#cpf").val(parsedValue.cpf);
+                                        $("#id").val(parsedValue.id);
+                                        window.scrollTo(0, 0);
+                                    });
+                                }
+                            });
+                        });
+
+                        $('.btn-delete').off('click');
+                        $('.btn-delete').on('click', function () {
+                            var id = $(this).data('id');
+
+                            if (confirm('Você tem certeza que quer excluir essa pessoa ?')) {
+                                clear();
+                                fetch(`https://localhost:7210/Person?id=${id}`, { method: 'DELETE' }).then(response => {
+                                    if (response.status == 400) {
+                                        response.json().then(parsedValue => {
+                                            var html = "Ocorreu um erro\n\n";
+                                            $.each(parsedValue, function (index, item) {
+                                                html += `${item}\n`;
+                                            });
+                                            alert(html);
+                                        });
+                                    } else {
+                                        response.json().then(parsedValue => {
+                                            loadTable();
+                                        });
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+
+            $('#btnSave').on('click', function () {
+                var input = {
+                    id: parseInt($("#id").val()),
+                    fullName: $("#fullName").val(),
+                    birthDate: $("#birthDate").val(),
+                    incomeValue: $("#incomeValue").val().replace(/\./g, ''),
+                    cpf: $("#cpf").val()
+                };
+                var verb = input.id > 0 ? "PUT" : "POST";
+
+                $.ajax({
+                    type: verb,
+                    url: 'https://localhost:7210/Person',
+                    contentType: 'application/json',
+                    data: JSON.stringify(input),
+                }).done(function () {
+                    clear();
+                    loadTable();
+                }).fail(function (msg) {
+                    var html = "Ocorreu um erro\n\n";
+                    $.each(msg.responseJSON, function (index, item) {
+                        html += `${item}\n`;
+                    });
+                    alert(html);
+                });
+
+            });
+
+            $('#btnNew').on('click', function () {
+                clear();
+            });
+
+            loadTable();
+
+        });
+    </script>
+</body>
+</html>

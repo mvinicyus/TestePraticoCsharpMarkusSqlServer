@@ -5,5 +5,6 @@
         public int? StartIndex { get; set; }
         public int? PageLength { get; set; }
         public int? Draw { get; set; }
+        public string Search { get; set; }
     }
 }

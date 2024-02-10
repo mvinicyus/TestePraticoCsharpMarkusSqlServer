@@ -2,7 +2,6 @@ using CrossCutting.DepencyInjector;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSignalR();
 builder.Services.AddRepositoryServices();
 builder.Services.AddMediatRServices();
 builder.Services.AddHttpContextAccessor();

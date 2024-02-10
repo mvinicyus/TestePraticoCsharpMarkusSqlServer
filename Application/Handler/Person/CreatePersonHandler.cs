@@ -47,8 +47,8 @@ namespace Application.Handler.Person
                 var newPerson = new PersonEntity
                 {
                     FullName = command.Input.FullName,
-                    BirthDate = command.Input.BirthDate,
-                    IncomeValue = command.Input.IncomeValue,
+                    BirthDate = DateTime.Parse(command.Input.BirthDate),
+                    IncomeValue = decimal.Parse(command.Input.IncomeValue),
                     Cpf = command.Input.Cpf,
                     CreateDate = DateTime.UtcNow
                 };

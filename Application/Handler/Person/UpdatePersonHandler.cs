@@ -40,13 +40,13 @@ namespace Application.Handler.Person
 
                 if (personExists == null)
                 {
-                    _ = ApplyErrorAsync("Person não encontrado.");
+                    _ = ApplyErrorAsync("Pessoa não encontrado.");
                     return null;
                 }
 
                 personExists.FullName = command.Input.FullName;
-                personExists.BirthDate = command.Input.BirthDate;
-                personExists.IncomeValue = command.Input.IncomeValue;
+                personExists.BirthDate = DateTime.Parse(command.Input.BirthDate);
+                personExists.IncomeValue = decimal.Parse(command.Input.IncomeValue);
                 personExists.Cpf = command.Input.Cpf;
                 personExists.UpdateDate = DateTime.UtcNow;
 

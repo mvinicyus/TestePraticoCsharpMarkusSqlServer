@@ -13,7 +13,7 @@ namespace TestePraticoCsharpMarkus.Controllers
         private readonly IMessagesHandler _messagesHandler;
 
         public PersonController(ILogger<PersonController> logger,
-                              IMessagesHandler messagesHandler)
+                                IMessagesHandler messagesHandler)
         {
             _logger = logger;
             _messagesHandler = messagesHandler;

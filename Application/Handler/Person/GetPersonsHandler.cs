@@ -34,7 +34,7 @@ namespace Application.Handler.Person
 
                 var query = _PersonRepository
                     .DbSet
-                    .FromSqlRaw("SELECT * FROM Person")
+                    .FromSqlRaw($"SELECT * FROM Person WHERE FullName LIKE '%{command.Input.Search}%'")
                     .AsQueryable();
 
                 var total = await query
@@ -47,26 +47,28 @@ namespace Application.Handler.Person
                     .ToListAsync()
                     .ConfigureAwait(false);
 
-                if (!(persons?.Any() ?? false))
-                {
-                    _ = ApplyErrorAsync("Persons não encontrados.");
-                    return null;
-                }
+                //if (!(persons?.Any() ?? false))
+                //{
+                //    _ = ApplyErrorAsync("Pessoas não encontradas.");
+                //    return null;
+                //}
+
                 await _PersonRepository.CommitTransactionAsync();
 
                 return new GetPersonsOutput
                 {
                     Draw = command.Input.Draw.Value,
-                    TotalItens = total,
-                    Data = persons.Select(person => new PersonInfoOutput
+                    RecordsTotal = total,
+                    RecordsFiltered = total,
+                    Data = persons.Select(person => new string[]
                     {
-                        Id = person.Id,
-                        FullName = person.FullName,
-                        BirthDate = person.BirthDate.Value.ToString("dd/MM/yyyy"),
-                        IncomeValue = person.IncomeValue.Value.ToString("N2"),
-                        Cpf = person.Cpf,
-                        CreateDate = person.CreateDate.ToString("dd/MM/yyyy HH:mm"),
-                        UpdateDate = person.UpdateDate?.ToString("dd/MM/yyyy HH:mm") ?? "-"
+                        person.Id.ToString(),
+                        person.FullName,
+                        person.BirthDate.Value.ToString("dd/MM/yyyy"),
+                        person.IncomeValue.Value.ToString("N2"),
+                        person.Cpf,
+                        person.CreateDate.ToString("dd/MM/yyyy HH:mm"),
+                        person.UpdateDate?.ToString("dd/MM/yyyy HH:mm") ?? "-"
                     })
                 };
             }
