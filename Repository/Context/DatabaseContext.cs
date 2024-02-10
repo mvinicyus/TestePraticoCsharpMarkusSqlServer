@@ -99,6 +99,6 @@ namespace Repository.Context
             }
         }
 
-        public DbSet<PersonEntity> Posts { get; set; }
+        public DbSet<PersonEntity> Persons { get; set; }
     }
 }

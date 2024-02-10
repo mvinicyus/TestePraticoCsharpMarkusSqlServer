@@ -9,7 +9,7 @@ namespace CrossCutting.DepencyInjector
         {
             services.AddSwaggerGen(x =>
             {
-                x.SwaggerDoc("v1", new OpenApiInfo { Title = "Blog teste", Version = "v1" });
+                x.SwaggerDoc("v1", new OpenApiInfo { Title = "Plataforma - Pessoas", Version = "v1" });
             });
             return services;
         }
